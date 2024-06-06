@@ -1,5 +1,6 @@
 from shop import app
+from flask import render_template
 
-@app.route("/admin", methods=["GET", "POST"])
+@app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
-    return "greeting"
+    return render_template("/admin/dashboard.html")

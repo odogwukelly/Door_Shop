@@ -15,6 +15,8 @@ try:
     # Execute the command to create the database
     my_cursor.execute("CREATE DATABASE IF NOT EXISTS door_Shop")
 
+    # my_cursor.execute("DROP DATABASE door_shop")
+
     # Execute the command to show all databases
     my_cursor.execute("SHOW DATABASES")
     
@@ -29,3 +31,10 @@ except mysql.connector.Error as err:
         print("Database does not exist")
     else:
         print(err)
+finally:
+    # Close the cursor and connection
+    if 'my_cursor' in locals() and my_cursor is not None:
+        my_cursor.close()
+    if 'mydb' in locals() and mydb.is_connected():
+        mydb.close()
+

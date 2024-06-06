@@ -23,3 +23,6 @@ db = SQLAlchemy(app)
 # import all routes modules
 from shop.routes.root import *
 from shop.routes.admin import *
+
+from shop.models.root import *
+from shop.models.admin import *
