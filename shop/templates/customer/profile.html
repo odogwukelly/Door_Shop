@@ -2,8 +2,11 @@
 
 {% block content %}
 
+<div style="display: flex; justify-content: center;">
+    {% include 'customer/msgFlash.html' %}
+</div>
 <div class="container profile-container">
-    {% include 'msgFlash.html' %}
+    
     <div class="profile-header">
         <img src="{{image_file}}" alt="Profile Picture" class="profile-image">
         <div class="profile-name">{{current_user.username}}</div>

@@ -13,7 +13,9 @@
 </head>
 
 <body style="background-color:rgb(171, 193, 207)">
-    <div class="container" style="width: 26rem; margin-top: 10px;"> {% include 'msgFlash.html' %}</div>
+    <div style="display: flex; justify-content: center;">
+        {% include 'customer/msgFlash.html' %}
+    </div>
     <div class="container"
         style="width: 25rem; background-color:aliceblue; border-radius: 30px; margin-top: 2%; margin-bottom: 3%;">
         <a href="{{url_for('landing_page')}}">

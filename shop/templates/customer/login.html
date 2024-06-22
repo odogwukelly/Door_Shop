@@ -13,23 +13,9 @@
 </head>
 
 <body style="background-color:rgb(171, 193, 207);">
-    <div class="container" style="width: 26rem; margin-top: 10px;"> {% with messages = get_flashed_messages(with_categories=true) %}
-        <!-- Begin a context block to retrieve flashed messages -->
-        {% if messages %}
-            <!-- Check if there are any flashed messages -->
-            <div class="flashes text-center">
-                <!-- Create a div container for flashed messages -->
-                {% for category, message in messages %}
-                    <!-- Iterate through each flashed message and its category -->
-                    <div class="alert alert-{{ category }}">
-                        <!-- Create an alert div with a class corresponding to the category -->
-                        {{ message }}
-                        <!-- Display the flashed message inside the alert div -->
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}</div>
+    <div style="display: flex; justify-content: center;">
+        {% include 'customer/msgFlash.html' %}
+    </div>
     <div class="container"
         style="width: 25rem; height: fit-content;background-color:aliceblue; border-radius: 30px; margin-top: 2%;">
         <a href="{{url_for('landing_page')}}">

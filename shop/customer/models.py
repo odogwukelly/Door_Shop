@@ -17,7 +17,7 @@ class Customer(db.Model, UserMixin):
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     username = db.Column(db.String(25), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    image_file = db.Column(db.String(50), nullable=False, default= "flower.png" )
+    image_file = db.Column(db.String(50), nullable=False, default= "defaults.png" )
     password = db.Column(db.String(255), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
     gender = db.Column(db.String(50))

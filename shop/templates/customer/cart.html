@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container mt-5">
-    {% include 'msgFlash.html' %}
+    <div style="display: flex; justify-content: center;">
+        {% include 'customer/msgFlash.html' %}
+    </div>
     <h2 class="mb-4">Your Cart</h2>
     <div class="table-responsive">
         <table class="table table-striped">
