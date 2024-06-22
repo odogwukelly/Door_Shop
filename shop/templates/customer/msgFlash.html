@@ -1,0 +1,17 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- Begin a context block to retrieve flashed messages -->
+    {% if messages %}
+        <!-- Check if there are any flashed messages -->
+        <div class="flashes text-center">
+            <!-- Create a div container for flashed messages -->
+            {% for category, message in messages %}
+                <!-- Iterate through each flashed message and its category -->
+                <div class="alert alert-{{ category }} pt-5 w-100">
+                    <!-- Create an alert div with a class corresponding to the category -->
+                    {{ message }}
+                    <!-- Display the flashed message inside the alert div -->
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}

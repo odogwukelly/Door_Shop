@@ -3,6 +3,9 @@
 {% block content %}
  <!-- Carousel -->
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div style="display: flex; justify-content: center;">
+        {% include 'customer/msgFlash.html' %}
+    </div>
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -118,7 +121,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-6">
                             <div class="testimonial">
-                                <img src="{{url_for('static', filename='customer/assets/profile_pics/1f6f57640d1cd18a.jpg')}}" class="rounded-circle mb-3 testimonial-img" alt="Customer 1">
+                                <img src="{{url_for('static', filename='customer/assets/profile_pics/defaults.png')}}" class="rounded-circle mb-3 testimonial-img" alt="Customer 1">
                                 <p>"Great products and excellent customer service!"</p>
                                 <h5>- Customer 1</h5>
                             </div>
@@ -129,7 +132,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-6">
                             <div class="testimonial">
-                                <img src="{{url_for('static', filename='customer/assets/profile_pics/1f6f57640d1cd18a.jpg')}}" class="rounded-circle mb-3 testimonial-img" alt="Customer 2">
+                                <img src="{{url_for('static', filename='customer/assets/profile_pics/defaults.png')}}" class="rounded-circle mb-3 testimonial-img" alt="Customer 2">
                                 <p>"Fast shipping and amazing prices. Highly recommend!"</p>
                                 <h5>- Customer 2</h5>
                             </div>
@@ -140,7 +143,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-6">
                             <div class="testimonial">
-                                <img src="{{url_for('static', filename='customer/assets/profile_pics/1f6f57640d1cd18a.jpg')}}" class="rounded-circle mb-3 testimonial-img" alt="Customer 3">
+                                <img src="{{url_for('static', filename='customer/assets/profile_pics/defaults.png')}}" class="rounded-circle mb-3 testimonial-img" alt="Customer 3">
                                 <p>"Quality products at affordable prices. Will shop again!"</p>
                                 <h5>- Customer 3</h5>
                             </div>

@@ -19,7 +19,7 @@ def my_orders():
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/a3d1cc0cfdfc6b5f.jpg')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
 
     orders = Order.query.filter_by(user_id=current_user.id).all()
     return render_template('customer/my_order.html', orders=orders, image_file=image_file)
@@ -34,7 +34,7 @@ def checkout():
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/a3d1cc0cfdfc6b5f.jpg')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
 
     form = CheckoutForm()
     cart = session.get('cart', {})
@@ -81,7 +81,7 @@ def order_confirmation(order_id):
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/a3d1cc0cfdfc6b5f.jpg')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
 
     order = Order.query.get_or_404(order_id)
     total_price = sum(item.product.price * item.quantity for item in order.order_items)
@@ -147,7 +147,7 @@ def cart():
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/a3d1cc0cfdfc6b5f.jpg')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
 
 
     if 'cart' not in session:
@@ -159,39 +159,6 @@ def cart():
     return render_template('customer/cart.html', form=form, cart=cart, total_price=total_price, image_file=image_file)
 
 
-
-
-
-
-
-# @app.route('/update_cart_quantity/<int:product_id>', methods=['POST'])
-# def update_cart_quantity(product_id):
-#     cart = session.get('cart', {})
-    
-#     if str(product_id) in cart:
-#         cart[str(product_id)]['quantity'] = int(request.form['quantity'])
-#         cart[str(product_id)]['color'] = request.form['color']
-#         session['cart'] = cart
-#         flash('Cart updated successfully', 'success')
-#     else:
-#         flash('Product not found in cart', 'danger')
-    
-#     return redirect(url_for('cart'))
-
-
-
-# @app.route("/remove_from_cart/<int:product_id>", methods=['POST'])
-# def remove_from_cart(product_id):
-#     cart = session.get('cart', {})
-    
-#     if str(product_id) in cart:
-#         del cart[str(product_id)]
-#         session['cart'] = cart
-#         flash('Item removed from cart', 'success')
-#     else:
-#         flash('Item not found in cart', 'danger')
-    
-#     return redirect(url_for('cart'))
 
 @app.route('/update_cart_quantity/<int:product_id>', methods=['POST'])
 @login_required
@@ -259,7 +226,7 @@ def landing_page():
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/a3d1cc0cfdfc6b5f.jpg')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
 
     products = Product.query.all()
     categories = Category.query.all()
@@ -271,7 +238,7 @@ def about_page():
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='default_profile.png')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
     return render_template("customer/about.html", image_file=image_file)
 
 
@@ -280,7 +247,7 @@ def contact_page():
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='default_profile.png')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
     return render_template("customer/contact.html", image_file=image_file)
 
 
@@ -289,7 +256,7 @@ def product_page():
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/a3d1cc0cfdfc6b5f.jpg')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
     
     categories = Category.query.all()
     products = Product.query.all()
@@ -328,7 +295,7 @@ def productDetails_page(product_id):
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/a3d1cc0cfdfc6b5f.jpg')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
     product = Product.query.get_or_404(product_id)
     related_products = Product.query.filter_by(category_id=product.category_id).filter(Product.id != product_id).limit(4).all()
     return render_template("customer/product_detail.html", product=product, image_file=image_file, related_products=related_products)
@@ -339,7 +306,7 @@ def cart_page():
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='default_profile.png')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
     return render_template("customer/cart.html", image_file=image_file)
 
 
@@ -448,7 +415,7 @@ def profile_page():
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/a3d1cc0cfdfc6b5f.jpg')
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
 
     return render_template('customer/profile.html', image_file=image_file, form=form)
 
