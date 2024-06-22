@@ -2,7 +2,8 @@
 
 {% block content %}
 <main>
-    <style>/* General table styling */
+    <style>
+        /* General table styling */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -10,20 +11,20 @@
             font-size: 18px;
             text-align: left;
         }
-        
+
         /* Table header styling */
         table thead th {
             color: black;
             padding: 12px;
             text-align: left;
         }
-        
+
         /* Table body styling */
         table tbody td {
             padding: 12px;
             border-bottom: 1px solid #ddd;
         }
-        
+
         /* Image container styling */
         table tbody td div {
             height: 100px;
@@ -31,14 +32,14 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         table tbody td div img {
             width: 100px;
             height: 100%;
             border-radius: 0;
             object-fit: cover;
         }
-        
+
         /* Button styling */
         table tbody td button {
             padding: 8px 12px;
@@ -47,55 +48,59 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        
+
         .btn-outline-info {
             color: #17a2b8;
             border-color: #17a2b8;
             background-color: transparent;
         }
-        
+
         .btn-outline-info:hover {
             color: white;
             background-color: #17a2b8;
         }
-        
+
         .btn-outline-danger {
             color: #dc3545;
             border-color: #dc3545;
             background-color: transparent;
         }
-        
+
         .btn-outline-danger:hover {
             color: white;
             background-color: #dc3545;
         }
-        
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             table {
                 font-size: 16px;
             }
-        
+
             table tbody td button {
                 font-size: 14px;
                 padding: 6px 10px;
             }
         }
-        
+
         @media (max-width: 480px) {
             table {
                 font-size: 14px;
             }
-        
+
             table tbody td button {
                 font-size: 12px;
                 padding: 4px 8px;
             }
         }
-        </style>
-    
+    </style>
+
+    <div style="display: flex; justify-content: center;">
+        {% include 'admin/msgFlash.html' %}
+    </div>
+
     <div class="head-title">
-        
+
         <div class="left">
             <h1>All Orders</h1>
         </div>
@@ -104,7 +109,7 @@
     <div class="table-data">
         <div class="order">
             <small style="display: flex;">Total = {{total_orders}}</small>
-        <hr style="margin-bottom: 8px;">
+            <hr style="margin-bottom: 8px;">
             <table>
                 <thead>
                     <tr>
@@ -119,15 +124,17 @@
                     {% for order in orders%}
                     <tr>
                         <td>
-                            <img src="{{ url_for('static', filename='customer/assets/profile_pics/' + order.customer.image_file) }}">
-                        <small>{{order.customer.username}}</small>
+                            <img
+                                src="{{ url_for('static', filename='customer/assets/profile_pics/' + order.customer.image_file) }}">
+                            <small>{{order.customer.username}}</small>
                         </td>
                         <td><small>{{order.timestamp.strftime('%d-%m-%Y')}}</small></td>
                         <td><small>{{order.status}}</small></td>
                         <td><small>${{ order.total_price() | round(2) }}</small></td>
-                        <td><a href="{{ url_for('update_order', order_id=order.id) }}"><button class="btn btn-outline-info">Edit</button></a></td>
-        
-                    {% endfor %}
+                        <td><a href="{{ url_for('update_order', order_id=order.id) }}"><button
+                                    class="btn btn-outline-info">Edit</button></a></td>
+
+                        {% endfor %}
                 </tbody>
             </table>
 

@@ -2,7 +2,8 @@
 
 {% block content %}
 <main>
-    <style>/* General form styling */
+    <style>
+        /* General form styling */
         form {
             max-width: 600px;
             margin: 0 auto;
@@ -11,12 +12,12 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        
+
         /* Form group styling */
         .form-group {
             margin-bottom: 15px;
         }
-        
+
         /* Label styling */
         .form-control-label {
             display: block;
@@ -24,7 +25,7 @@
             font-weight: bold;
             color: #555;
         }
-        
+
         /* Input field styling */
         .form-control {
             width: 100%;
@@ -33,7 +34,7 @@
             border-radius: 4px;
             font-size: 16px;
         }
-        
+
         /* Button styling */
         .btn-primary {
             width: 100%;
@@ -45,118 +46,121 @@
             color: #fff;
             cursor: pointer;
         }
-        
+
         .btn-primary:hover {
             background-color: #0056b3;
         }
-        
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             form {
                 padding: 15px;
             }
-        
+
             .form-control {
                 font-size: 14px;
             }
-        
+
             .btn-primary {
                 font-size: 16px;
             }
         }
-        
+
         @media (max-width: 480px) {
             form {
                 padding: 10px;
             }
-        
+
             .form-control {
                 font-size: 12px;
             }
-        
+
             .btn-primary {
                 font-size: 14px;
             }
         }
-        </style>
-        
-        <style>
-            /* General table styling */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 18px;
-    text-align: left;
-}
+    </style>
 
-/* Table header styling */
-table thead th {
-    color: black;
-    padding: 12px;
-    text-align: left;
-}
+    <style>
+        /* General table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
 
-/* Table body styling */
-table tbody td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
+        /* Table header styling */
+        table thead th {
+            color: black;
+            padding: 12px;
+            text-align: left;
+        }
 
-/* Button styling */
-table tbody td button {
-    padding: 8px 12px;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-}
+        /* Table body styling */
+        table tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
 
-table tbody td button.edit {
-    border: 1px solid #17a2b8;
-    background-color: #17a2b8;
-    color: white;
-}
+        /* Button styling */
+        table tbody td button {
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-table tbody td button.edit:hover {
-    background-color: #138496;
-    border-color: #138496;
-}
+        table tbody td button.edit {
+            border: 1px solid #17a2b8;
+            background-color: #17a2b8;
+            color: white;
+        }
 
-table tbody td button.delete {
-    border: 1px solid #dc3545;
-    background-color: #dc3545;
-    color: white;
-}
+        table tbody td button.edit:hover {
+            background-color: #138496;
+            border-color: #138496;
+        }
 
-table tbody td button.delete:hover {
-    background-color: #c82333;
-    border-color: #c82333;
-}
+        table tbody td button.delete {
+            border: 1px solid #dc3545;
+            background-color: #dc3545;
+            color: white;
+        }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    table {
-        font-size: 16px;
-    }
+        table tbody td button.delete:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+        }
 
-    table tbody td button {
-        font-size: 14px;
-        padding: 6px 10px;
-    }
-}
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            table {
+                font-size: 16px;
+            }
 
-@media (max-width: 480px) {
-    table {
-        font-size: 14px;
-    }
+            table tbody td button {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+        }
 
-    table tbody td button {
-        font-size: 12px;
-        padding: 4px 8px;
-    }
-}
+        @media (max-width: 480px) {
+            table {
+                font-size: 14px;
+            }
 
-        </style>
+            table tbody td button {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+        }
+    </style>
+
+    <div style="display: flex; justify-content: center;">
+        {% include 'admin/msgFlash.html' %}
+    </div>
     <div class="head-title">
         <div class="left">
             <h1>Category</h1>
@@ -179,34 +183,35 @@ table tbody td button.delete:hover {
 
         </div>
 
-        
+
         <div class="order">
             <small style="display: flex;">Total = {{total_categories}}</small>
-        <hr style="margin-bottom: 8px;">
-        <table>
-            <thead>
-                <tr>
-                    <th>Category Name</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for category in categories %}
-                <tr>
-                    
-                    <form action="{{ url_for('editCategory_page', category_id=category.id) }}" method="POST">
-                    <td><small>{{category.name}}</small></td>
-                    <td><button class="edit">Edit</button></td>
-                    </form>
-                    <form action="{{ url_for('delete_category', category_id=category.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this category and all associated products?');">
-                    <td><button class="delete">Delete</button></td>
-                </form>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            <hr style="margin-bottom: 8px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+
+                        <form action="{{ url_for('editCategory_page', category_id=category.id) }}" method="POST">
+                            <td><small>{{category.name}}</small></td>
+                            <td><button class="edit">Edit</button></td>
+                        </form>
+                        <form action="{{ url_for('delete_category', category_id=category.id) }}" method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this category and all associated products?');">
+                            <td><button class="delete">Delete</button></td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
 {% endblock content %}

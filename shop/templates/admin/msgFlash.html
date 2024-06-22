@@ -6,12 +6,23 @@
             <!-- Create a div container for flashed messages -->
             {% for category, message in messages %}
                 <!-- Iterate through each flashed message and its category -->
-                <div class="alert alert-{{ category }}">
+                <div class="alert alert-{{ category }} mt-5 w-100" data-dismiss="alert">
                     <!-- Create an alert div with a class corresponding to the category -->
                     {{ message }}
                     <!-- Display the flashed message inside the alert div -->
                 </div>
             {% endfor %}
         </div>
+        <!-- Include a script to hide the alerts after 3 seconds -->
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                setTimeout(() => {
+                    let alerts = document.querySelectorAll('.alert');
+                    alerts.forEach((alert) => {
+                        alert.style.display = 'none';
+                    });
+                }, 2000);
+            });
+        </script>
     {% endif %}
 {% endwith %}
