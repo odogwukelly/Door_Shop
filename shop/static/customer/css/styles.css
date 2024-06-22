@@ -1,0 +1,601 @@
+
+/* ================== Custom CSS for E-Commerce Landing Page ===========================*/
+body {
+    font-family: 'Arial', sans-serif;
+    padding-top: 56px; /* Adjust the padding to account for the fixed navbar */
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.carousel-inner img {
+    height: 600px;
+    object-fit: cover;
+}
+
+.carousel-caption {
+    background: none;
+    color: black;
+    width: 40%;
+    padding: 10px;
+    border-radius: 5px;
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: left;
+}
+
+.features-section {
+    background: #f9f9f9;
+    padding: 50px 0;
+}
+
+.feature-box {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.feature-box i {
+    color: #007bff;
+}
+
+.product-showcase {
+    padding: 50px 0;
+}
+
+.product-img {
+    height: 600px; /* Adjust the height as needed */
+    object-fit: cover;
+}
+
+.testimonials-section {
+    background: #f9f9f9;
+    padding: 50px 0;
+}
+
+.testimonial {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter-section {
+    background: #f1f1f1;
+    padding: 50px 0;
+}
+
+footer {
+    background: #f1f1f1;
+    padding: 20px 0;
+}
+
+/* Sliding Images */
+.sliding-images-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap; /* Ensure images stay in a single row */
+}
+
+.sliding-images-container img {
+    height: 250px;
+    width: 250px;
+    margin: 10px;
+    display: inline-block; /* Display images in a single row */
+    animation: slide 10s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Custom Styles for Newsletter Section */
+.newsletter-section {
+    background: #f1f1f1;
+    padding: 50px 0;
+}
+
+.newsletter-section h2 {
+    margin-bottom: 20px;
+}
+
+.newsletter-section p {
+    margin-bottom: 20px;
+}
+
+/* Custom Styles for Footer */
+footer {
+    background: #f1f1f1;
+    padding: 20px 0;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+    .product-img {
+        height: auto;
+    }
+
+    .product-showcase .sliding-images-container img {
+        height: auto;
+        width: 100%;
+        margin: 10px 0;
+        display: inline-block;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .carousel-inner img {
+        height: 400px;
+    }
+
+    .product-img {
+        height: 400px;
+    }
+
+    .product-showcase .sliding-images-container img {
+        height: 150px;
+        width: 150px;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    .carousel-inner img {
+        height: 500px;
+    }
+
+    .product-img {
+        height: 500px;
+    }
+
+    .product-showcase .sliding-images-container img {
+        height: 250px;
+        width: 250px;
+        margin: 10px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+    .carousel-inner img {
+        height: 600px;
+    }
+
+    .product-img {
+        height: 600px;
+    }
+
+    .product-showcase .sliding-images-container img {
+        height: 250px;
+        width: 250px;
+        margin: 10px;
+    }
+}
+.testimonial-img {
+    max-width: 250px; /* Adjust as needed */
+    max-height: 250px; /* Adjust as needed */
+}
+/* =========================== landing page end ================================== */
+
+/* =========================== product page start ================================== */
+.list-group-item {
+    border-radius: 0;
+}
+
+.btn-cart{
+    background-color: rgb(28, 169, 177); 
+    border-radius: 30px; 
+    border: 0; 
+    padding: 5px 10px; 
+    padding-bottom: -10px;
+}
+
+
+
+.card-img-top {
+    height: 300px;
+    object-fit:cover;
+}
+
+@media (max-width: 576px) {
+    .col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .sidebar {
+        display: none;
+    }
+    .mobile-category {
+        display: block;
+        margin-bottom: 20px;
+        position: fixed;
+        top: 56px;
+        width: 100%;
+        z-index: 1000;
+        background-color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    .content {
+        padding-top: 100px;
+    }
+}
+
+@media (min-width: 577px) {
+    .mobile-category {
+        display: none;
+    }
+    .sidebar {
+        position: fixed;
+        top: 80px;
+        width: 25%;
+    }
+    .content {
+        margin-left: 25%;
+        padding-left: 8%;
+    }
+}
+/* ============================ product page end ==============================*/
+
+
+/* ============================ about page start ==============================*/
+.header {
+    background-color: powderblue;
+    color: black;
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+.about-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.about-description {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.about-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.about-content {
+    font-size: 16px;
+    color: #333;
+}
+
+.about-content p {
+    margin-bottom: 10px;
+}
+
+.about-content ul {
+    padding-left: 20px;
+}
+
+.about-content ul li {
+    margin-bottom: 5px;
+}
+
+.contact-info {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.contact-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-info ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.contact-info ul li strong {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.contact-info ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.contact-info ul li a:hover {
+    text-decoration: underline;
+}
+/* ============================ about page end ==============================*/
+
+
+/* ============================ contact page start ==============================*/
+.header {
+    background-color: powderblue;
+    color: black;
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+.contact-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-submit {
+    background-color: black;
+    color: #fff;
+    border: none;
+}
+
+.btn-submit:hover {
+    background-color: powderblue;
+    color: black;
+}
+/* ============================ contact page end ==============================*/
+
+/* ============================ product detail page start ==============================*/
+
+
+.product-detail {
+    padding: 2rem 1rem;
+}
+
+.product-detail .product-image {
+    max-width: 100%;
+    border-radius: 5px;
+    height: 30rem;
+}
+
+.product-detail .product-thumbnails img {
+    max-width: 80px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.product-detail .product-thumbnails img.selected {
+    border-color: #007bff;
+}
+
+.product-detail .product-info {
+    padding: 2rem 1rem;
+}
+
+.product-detail .product-info h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.product-detail .product-info .price {
+    font-size: 1.5rem;
+    color: #ff6347;
+    margin-bottom: 1rem;
+}
+
+.product-detail .product-info .description {
+    margin-bottom: 1.5rem;
+}
+
+.product-detail .product-info .add-to-cart {
+    margin-top: 1rem;
+}
+
+.product-detail .product-info .add-to-cart button {
+    font-size: 1.2rem;
+    padding: 0.5rem 2rem;
+}
+
+.product-detail .related-products {
+    margin-top: 4rem;
+}
+
+.product-detail .related-products h3 {
+    margin-bottom: 2rem;
+}
+
+.product-detail .related-products .card {
+    border: none;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.product-detail .related-products .card:hover {
+    transform: scale(1.05);
+}
+
+.product-detail .related-products .card-img-top {
+    height: 300px;
+    object-fit:cover;
+}
+
+.container {
+    margin-top: 60px; /* Adjust based on your header height */
+}
+
+.product-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+    .product-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+/* ============================ product detail page end ==============================*/
+
+/* ============================ profile page start ==============================*/
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.profile-email {
+    font-size: 18px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.profile-info {
+    margin-bottom: 20px;
+}
+
+.profile-label {
+    font-weight: bold;
+}
+
+.profile-data {
+    margin-left: 10px;
+}
+
+.profile-actions {
+    text-align: center;
+}
+
+.btn-edit {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.btn-edit:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+/* ============================ profile page end ==============================*/
+
+.cart-counter {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-counter p {
+    position: absolute;
+    top: -27px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 100%;
+    padding: 2px 6px;
+    font-size: 10px;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .layout-cart-icon{
+        display: none;
+
+    
+    }
+    
+}
+

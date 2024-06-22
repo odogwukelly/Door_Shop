@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+        .checkout-container {
+            margin-top: 20px;
+        }
+        .cart-summary {
+            margin-top: 20px;
+        }
+        .cart-summary img {
+            width: 50px;
+            height: 50px;
+        }
+        .cart-summary .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        .cart-summary .item img {
+            margin-right: 10px;
+        }
+    </style>
+
+    <div class="container checkout-container">
+        <h2 class="pt-3">Checkout</h2>
+        <div class="row">
+            <div class="col-md-6 pb-3">
+                <h3>Shipping Information</h3>
+                <form method="POST" action="{{ url_for('checkout') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ form.full_name.label(class="form-control-label") }}
+                        {{ form.full_name(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.address.label(class="form-control-label") }}
+                        {{ form.address(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.city.label(class="form-control-label") }}
+                        {{ form.city(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.state.label(class="form-control-label") }}
+                        {{ form.state(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.zip_code.label(class="form-control-label") }}
+                        {{ form.zip_code(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.phone_number.label(class="form-control-label") }}
+                        {{ form.phone_number(class="form-control") }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Place Order</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h3>Order Summary</h3>
+                <div class="cart-summary">
+                    {% for product_id, item in cart.items() %}
+                    <div class="item">
+                        <img src="{{ url_for('static', filename='product_images/' ~ item.image) }}" alt="{{ item.title }}">
+                        <div>{{ item.title }} - {{ item.color }}</div>
+                        <div>Quantity: {{ item.quantity }}</div>
+                        <div>${{ item.price * item.quantity }}</div>
+                    </div>
+                    {% endfor %}
+                    <hr>
+                    <div class="total">
+                        <strong>Total: ${{ total_price }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    {% include 'msgFlash.html' %}
+    <h2 class="mb-4">Your Cart</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Title</th>
+                    <th>Quantity</th>
+                    <th>Product Color</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                    <th>Update</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, item in cart.items() %}
+                <tr>
+                    
+                    <td><img src="{{ url_for('static', filename='product_images/' + item.image) }}" alt="{{ item.title }}" class="img-thumbnail" style="max-width: 100px; max-height: 80px;"></td>
+                    <td>{{ item.title }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('update_cart_quantity', product_id=key) }}" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to Update this cart?');">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" class="form-control" min="1">
+                    </td>
+                    <td>
+                            <input type="text" name="color" value="{{ item.color }}" class="form-control">
+                            
+                    </td>
+                    <td>${{ item.price }}</td>
+                    <td>${{ item.price * item.quantity }}</td>
+                    
+                    <td> 
+                        <button type="submit" class="btn btn-outline-info btn-sm">Edit</button>
+                    </form>
+                </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('remove_from_cart', product_id=key) }}" style="display:inline;" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to Delete this cart?');">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h3 class="mt-4">Total: ${{ total_price }}</h3>
+    <form method="POST" action="{{url_for('checkout')}}">
+        {{ form.hidden_tag() }}
+        {{ form.submit(class="btn btn-success") }}
+    </form>
+</div>
+{% endblock %}

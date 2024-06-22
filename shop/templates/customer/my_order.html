@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <h3>All Orders</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Cost</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td><small>QXP00{{ order.id }}</small></td>
+                    <td><small>${{ order.total_price() | round(2) }}</small></td>
+                    <td><small>{{ order.timestamp.strftime('%d-%m-%Y') }}</small></td>
+                    <td><small>{{ order.status }}</small></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

@@ -4,9 +4,10 @@ from mysql.connector import errorcode
 try:
     # Connect to the MySQL server
     mydb = mysql.connector.connect(
-        host="localhost",
+        host= "localhost",
         user="root",
-        passwd="kitech"
+        passwd="kitech",
+        auth_plugin='sha256_password'
     )
     
     # Create a cursor object
@@ -14,16 +15,14 @@ try:
 
     # Execute the command to create the database
     my_cursor.execute("CREATE DATABASE IF NOT EXISTS door_Shop")
-
+    
     # my_cursor.execute("DROP DATABASE door_shop")
 
     # Execute the command to show all databases
     my_cursor.execute("SHOW DATABASES")
-    
-    # Fetch and print the list of databases
-    for db in my_cursor:
-        print(db)
 
+    print("Database Created Successfully......")
+    
 except mysql.connector.Error as err:
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
         print("Something is wrong with your user name or password")
@@ -37,4 +36,3 @@ finally:
         my_cursor.close()
     if 'mydb' in locals() and mydb.is_connected():
         mydb.close()
-

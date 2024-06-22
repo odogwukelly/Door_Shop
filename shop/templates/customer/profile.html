@@ -1,0 +1,99 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container profile-container">
+    {% include 'msgFlash.html' %}
+    <div class="profile-header">
+        <img src="{{image_file}}" alt="Profile Picture" class="profile-image">
+        <div class="profile-name">{{current_user.username}}</div>
+        <div class="profile-email">{{ current_user.email }}</div>
+    </div>
+    <hr>
+    <form action="{{url_for('my_orders')}}" method="POST">
+        <button class=" btn-outline-info" style="border-radius: 50px; font-size: larger;">My Orders</button>
+    </form>
+    <hr>
+    <form method="POST" action="{{url_for('profile_page')}}" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to Update your profile?');">
+        {{ form.hidden_tag() }}
+        
+        <fieldset class="form-group">
+            <h3 class="mt-4">Update Profile</h3>
+            </legend>
+            <br>
+            
+            <!-- Username Field -->
+            <div class="form-group">
+                {{ form.username.label() }}
+                {% if form.username.errors %}
+                {{ form.username(class="form-control form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.username(class="form-control form-control") }}
+                {% endif %}
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                {% if form.email.errors %}
+                {{ form.email(class="form-control form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.email(class="form-control form-control") }}
+                {% endif %}
+            </div>
+            <!-- Date of Birth Field -->
+            <div class="form-group">
+                {{ form.date_of_birth.label(class="form-control-label") }}
+                {% if form.date_of_birth.errors %}
+                {{ form.date_of_birth(class="form-control form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.date_of_birth.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.date_of_birth(class="form-control form-control") }}
+                {% endif %}
+            </div>
+
+            <!-- Gender Field -->
+            <div class="form-group">
+                {{ form.gender.label(class="form-control-label") }}
+                {{ form.gender(class="form-control form-control") }}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.profile_img.label() }}
+                {{ form.profile_img(class="form-control-file") }}
+                {% if form.profile_img.errors %}
+                {% for error in form.profile_img.errors %}
+                    <span class="text-danger">{{ error }}</span><br>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </fieldset>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+            <div>
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </div>
+    </form>
+    <div class="logout" style="display: flex; justify-content: end;">
+        <a class="btn btn-outline-danger" href="{{url_for('logout')}}">Logout</a>
+    </div>
+    
+</div>
+
+{% endblock content %}

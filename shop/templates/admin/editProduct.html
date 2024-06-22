@@ -1,0 +1,169 @@
+{% extends 'admin_layout.html' %}
+
+{% block content %}
+<main>
+    <style>
+     .table-data {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.order {
+    padding: 20px;
+}
+
+.head-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.head-title h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-control-file {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.btn-primary,
+.btn-secondary {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #3C91E6;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        max-width: 300px;
+    }
+}
+
+    </style>
+
+    
+
+    <!-- add product form -->
+    <div class="table-data">
+        <div class="order">
+            <div class="head-title">
+                <div class="left">
+                    <h1>Edit Product</h1>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ form.title.label(class="form-control-label") }}
+                        {{ form.title(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.category.label(class="form-control-label") }}
+                        {{ form.category(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.price.label(class="form-control-label") }}
+                        {{ form.price(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.description.label(class="form-control-label") }}
+                        {{ form.description(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.size.label(class="form-control-label") }}
+                        {{ form.size(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.color.label(class="form-control-label") }}
+                        {{ form.color(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.quantity.label(class="form-control-label") }}
+                        {{ form.quantity(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.image_1.label(class="form-control-label") }}
+                        {{ form.image_1(class="form-control-file") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.image_2.label(class="form-control-label") }}
+                        {{ form.image_2(class="form-control-file") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.image_3.label(class="form-control-label") }}
+                        {{ form.image_3(class="form-control-file") }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Product</button>
+                    <a href="{{ url_for('allProduct_page') }}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock content %}

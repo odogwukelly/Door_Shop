@@ -1,0 +1,126 @@
+<!-- products.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-3">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 sidebar">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action active">
+                    Categories
+                </a>
+                <a href="#" class="list-group-item list-group-item-action category-link" data-category-id="">All Products</a>
+                {% for category in categories %}
+                <a href="#" class="list-group-item list-group-item-action category-link" data-category-id="{{ category.id }}">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <!-- Mobile Category Dropdown -->
+        <div class="col-12 mobile-category">
+            <select class="form-control" id="category-select">
+                <option value="">All Products</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Products Section -->
+        <div class="col-lg-9 content">
+            <div class="row" id="product-container">
+                {% for product in products %}
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-4 product-item" data-category-id="{{ product.category_id }}">
+                    <div class="card h-100" style="margin-bottom: -15px;">
+                        <a href="{{ url_for('productDetails_page', product_id=product.id) }}">
+                            <img class="card-img-top" src="{{ url_for('static', filename='product_images/' + product.image_1) }}" alt="">
+                        </a>
+                        <div class="card-body">
+                            <div class="">
+                                <h6 class="card-title">
+                                    {{ product.title }}
+                                </h6>
+                                <small>${{ product.price }}</small>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.col-lg-9 -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+
+<!-- Modal for Product Details -->
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productModalLabel">Product Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="productDetailBody">
+        <!-- Product details will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.category-link').on('click', function(e) {
+            e.preventDefault();
+            var categoryId = $(this).data('category-id');
+            filterProducts(categoryId);
+        });
+        
+        $('#category-select').on('change', function() {
+            var categoryId = $(this).val();
+            filterProducts(categoryId);
+        });
+        
+        $('.product-item').on('click', function(e) {
+            // Ensure clicks on links inside the product item don't trigger navigation
+            if (!$(e.target).is('a')) {
+                var productId = $(this).find('.product-link').data('product-id');
+                loadProductDetails(productId);
+            }
+        });
+        
+        function filterProducts(categoryId) {
+            $('.product-item').hide(); // Hide all product items
+            
+            if (categoryId === '') {
+                $('.product-item').show(); // Show all products if category is empty
+            } else {
+                $('.product-item[data-category-id="' + categoryId + '"]').show(); // Show products matching the selected category
+            }
+        }
+        
+        function loadProductDetails(productId) {
+            $.ajax({
+                url: `/product/${productId}`,
+                type: 'GET',
+                success: function(response) {
+                    $('#productDetailBody').html(response);
+                    $('#productModal').modal('show'); // Show the modal with product details
+                },
+                error: function(error) {
+                    console.error('Error fetching product details:', error);
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}
