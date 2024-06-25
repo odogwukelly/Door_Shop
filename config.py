@@ -16,3 +16,5 @@ class Config():
         'pool_recycle': 1800,
         'pool_pre_ping': True,
     }
+    STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+    STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")

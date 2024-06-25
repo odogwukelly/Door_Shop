@@ -5,7 +5,80 @@ from .models import Customer, Order, OrderItem
 from .models import Product, Category
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets
-import os
+import os, stripe
+from dotenv import load_dotenv
+load_dotenv()
+
+stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
+
+
+
+
+@app.route("/checkout", methods=['GET', 'POST'])
+@login_required
+def checkout():
+    if current_user.is_authenticated:
+        image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
+    else:
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
+
+    form = CheckoutForm()
+    cart = session.get('cart', {})
+    total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+
+    if not cart:
+        flash('Your cart is empty!', 'danger')
+        return redirect(url_for('cart_page'))
+
+    if request.method == 'POST' and form.validate_on_submit():
+        try:
+            # Create a Stripe Payment Intent
+            intent = stripe.PaymentIntent.create(
+                amount=int(total_price * 100),  # Stripe expects amount in cents
+                currency='usd',
+                metadata={'user_id': current_user.id}
+            )
+            # Render the checkout template with client_secret to handle payment
+            return render_template('customer/checkout.html', form=form, cart=cart, total_price=total_price, image_file=image_file, client_secret=intent.client_secret, stripe_public_key=os.getenv('STRIPE_PUBLIC_KEY'))
+
+        except stripe.error.StripeError as e:
+            flash('Payment processing error! Please try again.', 'danger')
+            return redirect(url_for('checkout'))
+
+    return render_template('customer/checkout.html', form=form, cart=cart, total_price=total_price, image_file=image_file, stripe_public_key=os.getenv('STRIPE_PUBLIC_KEY'))
+
+@app.route("/confirm_order", methods=['POST'])
+@login_required
+def confirm_order():
+    cart = session.get('cart', {})
+    if not cart:
+        flash('Your cart is empty!', 'danger')
+        return redirect(url_for('cart_page'))
+
+    payment_intent_id = request.form.get('payment_intent_id')
+    if not payment_intent_id:
+        flash('Payment not processed. Please try again.', 'danger')
+        return redirect(url_for('checkout'))
+
+    # Create a new order
+    order = Order(user_id=current_user.id)
+    db.session.add(order)
+    db.session.commit()
+
+    for product_id, item in cart.items():
+        order_item = OrderItem(
+            order_id=order.id,
+            product_id=int(product_id),
+            quantity=item['quantity']
+        )
+        db.session.add(order_item)
+    db.session.commit()
+
+    # Clear the cart
+    session['cart'] = {}
+    flash('Your order has been placed successfully!', 'success')
+    return redirect(url_for('order_confirmation', order_id=order.id))
+
 
 
 
@@ -23,55 +96,6 @@ def my_orders():
 
     orders = Order.query.filter_by(user_id=current_user.id).all()
     return render_template('customer/my_order.html', orders=orders, image_file=image_file)
-
-
-
-
-
-@app.route("/checkout", methods=['GET', 'POST'])
-@login_required
-def checkout():
-    if current_user.is_authenticated:
-        image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
-    else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
-
-    form = CheckoutForm()
-    cart = session.get('cart', {})
-    total_price = sum(item['price'] * item['quantity'] for item in cart.values())
-
-    # Check if the cart is empty
-    if not cart:
-        flash('Your cart is empty!', 'danger')
-        return redirect(url_for('cart_page'))
-
-    if form.validate_on_submit():
-        # Create a new order
-        order = Order(user_id=current_user.id)
-        db.session.add(order)
-        db.session.commit()
-
-        print(f"Created order with ID: {order.id}")
-
-        # Add order items
-        for product_id, item in cart.items():
-            print(f"Adding item with Product ID: {product_id} to Order ID: {order.id}")
-            order_item = OrderItem(
-                order_id=order.id,
-                product_id=int(product_id),
-                quantity=item['quantity']
-            )
-            db.session.add(order_item)
-        
-        db.session.commit()
-
-        # Clear the cart
-        session['cart'] = {}
-        flash('Your order has been placed successfully!', 'success')
-        return redirect(url_for('order_confirmation', order_id=order.id))
-
-    return render_template('customer/checkout.html', form=form, cart=cart, total_price=total_price, image_file=image_file)
-
 
 
 
@@ -155,8 +179,8 @@ def cart():
     
     cart = session['cart']
     total_price = sum(item['price'] * item['quantity'] for item in cart.values())
-    form = CheckoutForm()
-    return render_template('customer/cart.html', form=form, cart=cart, total_price=total_price, image_file=image_file)
+
+    return render_template('customer/cart.html', cart=cart, total_price=total_price, image_file=image_file)
 
 
 

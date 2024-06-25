@@ -51,9 +51,10 @@
         </table>
     </div>
     <h3 class="mt-4">Total: ${{ total_price }}</h3>
-    <form method="POST" action="{{url_for('checkout')}}">
-        {{ form.hidden_tag() }}
-        {{ form.submit(class="btn btn-success") }}
-    </form>
+    <a href="{{ url_for('checkout')}}">
+        <button class="btn btn-outline-info">Proceed To Checkout</button>
+    </a>
+        
+    
 </div>
 {% endblock %}
