@@ -175,6 +175,16 @@ def allProduct_page():
 
 
 
+@app.route("/all-customers", methods=['GET', 'POST'])
+@login_required
+def allCustomer_page():
+    if current_user.is_authenticated and not current_user.is_admin:
+            return redirect(url_for('landing_page'))
+    customers = Customer.query.all()
+    total_customer = Customer.query.count()
+    return render_template('admin/all_customer.html', customers=customers, total_customer=total_customer)
+
+
 
 
 
@@ -199,7 +209,8 @@ def addProduct_page():
             size=json.dumps(sizes),  # Store as JSON string
             color=json.dumps(colors),  # Store as JSON string
             quantity=form.quantity.data,
-            category_id=form.category.data
+            category_id=form.category.data,
+            featured_product=form.featured_product.data
         )
         if form.image_1.data:
             product.image_1 = save_image(form.image_1.data)

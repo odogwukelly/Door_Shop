@@ -285,11 +285,12 @@ def landing_page():
     if current_user.is_authenticated:
         image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
     else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
+        image_file = url_for('static', filename='customer/assets/profile_pics/defaults.png')
 
+    featured_products = Product.query.filter_by(featured_product=True).all()
     products = Product.query.all()
     categories = Category.query.all()
-    return render_template("customer/index.html", image_file=image_file, products=products, categories=categories )
+    return render_template("customer/index.html", image_file=image_file, products=products,  f_product={'featured_product': featured_products}, categories=categories )
 
 
 @app.route("/about")

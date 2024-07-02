@@ -23,7 +23,7 @@
             <tbody>
                 {% for key, item in cart.items() %}
                 <tr>
-                    <td><img src="{{ url_for('static', filename='product_images/' + item.image) }}" alt="{{ item.title }}" class="img-thumbnail" style="max-width: 100px; max-height: 80px;"></td>
+                    <td><img src="{{ url_for('static', filename='product_images/' + item.image) }}" alt="{{ item.title }}" class="img-thumbnail" style="width: 70px; height: 80px;"></td>
                     <td>{{ item.title }}</td>
                     <td>
                         <form method="POST" action="{{ url_for('update_cart_quantity', product_id=key) }}" enctype="multipart/form-data">

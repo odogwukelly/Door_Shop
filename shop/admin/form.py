@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, FloatField, IntegerField, FileField, PasswordField, SelectField, SubmitField, DecimalField
+from wtforms import StringField, TextAreaField, FloatField, IntegerField, FileField, BooleanField, SelectField, SubmitField, DecimalField
 from wtforms.validators import DataRequired, Length, NumberRange
 from flask_wtf.file import FileField, FileAllowed
 from shop.customer.models import Category
@@ -13,6 +13,7 @@ class CategoryForm(FlaskForm):
 
 class AddProductForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(min=2, max=100)])
+    featured_product = BooleanField('Add as Featured Product')
     price = FloatField('Price', validators=[DataRequired(), NumberRange(min=0)])
     description = TextAreaField('Description', validators=[Length(max=600)])
     size = StringField('Size', validators=[Length(max=100)])

@@ -134,7 +134,7 @@
                         <td><small>${{product.price}}</small></td>
                         <td><small>{{product.quantity}} pcs</small></td>
                         <td><a href="{{url_for('editProduct_page', product_id=product.id)}}"><button
-                                    class="btn btn-outline-info">Edit</button></a></td>
+                                    class="btn btn-outline-info ">Edit</button></a></td>
                         <form action="{{ url_for('delete_product', product_id=product.id) }}" method="POST"
                             onsubmit="return confirm('Are you sure you want to delete this product?');">
                             <td><button class="btn btn-outline-danger">Delete</button></td>

@@ -75,6 +75,5 @@ class CheckoutForm(FlaskForm):
     address = StringField('Address', validators=[DataRequired(), Length(min=5, max=200)])
     city = StringField('City', validators=[DataRequired(), Length(min=2, max=50)])
     state = StringField('State', validators=[DataRequired(), Length(min=2, max=50)])
-    zip_code = StringField('Zip Code', validators=[DataRequired(), Length(min=2, max=10)])
     phone_number = StringField('Phone Number', validators=[DataRequired(), Length(min=10, max=15)])
     submit = SubmitField('Place Order')

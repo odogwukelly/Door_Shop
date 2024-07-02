@@ -54,6 +54,7 @@ class Product(db.Model):
     image_1 = db.Column(db.String(50), nullable=True)
     image_2 = db.Column(db.String(50), nullable=True)
     image_3 = db.Column(db.String(50), nullable=True)
+    featured_product = db.Column(db.Boolean, default=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     order_items = db.relationship('OrderItem', backref='product', cascade='all, delete-orphan')
 

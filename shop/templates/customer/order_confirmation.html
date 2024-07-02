@@ -35,6 +35,10 @@
                     <div class="col-md-2">
                     <small>Price: ${{ item.product.price }}</small>
                     </div>
+                    <div class="col-md-2">
+                        <small>Sum Total: ${{ item.product.price * item.quantity }}</small>
+                    </div>
+                    
                 </div>
             </li>
             {% endfor %}

@@ -1,0 +1,47 @@
+{% extends 'admin_layout.html' %}
+
+{% block content %}
+<main>
+    <div class="head-title">
+
+        <div class="left">
+            <h1>All Customers</h1>
+        </div>
+    </div>
+    <div class="table-data">
+        <div class="order">
+            <small style="display: flex;">Total = {{total_customer}}</small>
+            <hr style="margin-bottom: 8px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Birth Date</th>
+                        <th>Date Joined</th>
+                        <th>Time Joined</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>
+                            <img src="{{url_for('static', filename='customer/assets/profile_pics/' + customer.image_file)}}">
+                            <p>{{customer.username}}</p>
+                        </td>
+                        <td><small>{{customer.date_of_birth}}</small></td>
+                        <td><small>{{customer.date_created.strftime('%d-%m-%Y')}}</small></td>
+                        <td><small>{{customer.date_created.strftime('%H:%M:%S')}}</small></td>
+                        <td><small>{{customer.email}}</small></td>
+                        <td><small>{{customer.gender}}</small></td>
+                    
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

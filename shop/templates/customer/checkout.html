@@ -26,6 +26,26 @@
 <div class="container checkout-container">
     <h2 class="pt-3">Checkout</h2>
     <div class="row">
+        <div class="col-md-6 mt-3 mb-5">
+            <h3>Order Summary</h3>
+            <div class="cart-summary">
+                {% for product_id, item in cart.items() %}
+                <div class="item">
+                    <img src="{{ url_for('static', filename='product_images/' ~ item.image) }}" alt="{{ item.title }}">
+                    <div>{{ item.title }}</div>
+                    <div>Color: {{ item.selected_color }}</div>
+                    <div>Size: {{ item.selected_size }}</div>
+                    <div>Quantity: {{ item.quantity }}</div>
+                    <div>${{ item.price * item.quantity }}</div>
+                </div>
+                {% endfor %}
+                <hr>
+                <div class="total">
+                    <strong>Total: ${{ total_price }}</strong>
+                </div>
+            </div>
+        </div>
+        
         <div class="col-md-6 pb-3">
             <h3>Shipping Information</h3>
             <form id="payment-form" method="POST" action="{{ url_for('checkout') }}">
@@ -47,10 +67,7 @@
                     {{ form.state.label(class="form-control-label") }}
                     {{ form.state(class="form-control") }}
                 </div>
-                <div class="form-group">
-                    {{ form.zip_code.label(class="form-control-label") }}
-                    {{ form.zip_code(class="form-control") }}
-                </div>
+                
                 <div class="form-group">
                     {{ form.phone_number.label(class="form-control-label") }}
                     {{ form.phone_number(class="form-control") }}
@@ -67,25 +84,7 @@
                 <button id="checkout-button" type="submit" class="btn btn-primary">Place Order</button>
             </form>
         </div>
-        <div class="col-md-6">
-            <h3>Order Summary</h3>
-            <div class="cart-summary">
-                {% for product_id, item in cart.items() %}
-                <div class="item">
-                    <img src="{{ url_for('static', filename='product_images/' ~ item.image) }}" alt="{{ item.title }}">
-                    <div>{{ item.title }}</div>
-                    <div>Color: {{ item.selected_color }}</div>
-                    <div>Size: {{ item.selected_size }}</div>
-                    <div>Quantity: {{ item.quantity }}</div>
-                    <div>${{ item.price * item.quantity }}</div>
-                </div>
-                {% endfor %}
-                <hr>
-                <div class="total">
-                    <strong>Total: ${{ total_price }}</strong>
-                </div>
-            </div>
-        </div>
+        
     </div>
 </div>
 
