@@ -48,7 +48,8 @@
                 <thead>
                     <tr>
                         <th>User</th>
-                        <th>Date Order</th>
+                        <th>Order Date</th>
+                        <th>Order Time</th>
                         <th>Status</th>
                         <th>Price</th>
                     </tr>
@@ -61,6 +62,7 @@
                         <small>{{order.customer.username}}</small>
                         </td>
                         <td><small>{{order.timestamp.strftime('%d-%m-%Y')}}</small></td>
+                        <td><small>{{order.timestamp.strftime('%H:%M:%S')}}</small></td>
                         <td><small>{{order.status}}</small></td>
                         <td><small>${{ order.total_price() | round(2) }}</small></td>
                     {% endfor %}
@@ -78,6 +80,7 @@
                     <tr>
                         <th>User</th>
                         <th>Birth Date</th>
+                        <th>Date Joined</th>
                         <th>Email</th>
                         <th>Gender</th>
                     </tr>
@@ -90,6 +93,7 @@
                             <p>{{customer.username}}</p>
                         </td>
                         <td><small>{{customer.date_of_birth}}</small></td>
+                        <td><small>{{customer.date_created.strftime('%H:%M:%S')}}</small></td>
                         <td><small>{{customer.email}}</small></td>
                         <td><small>{{customer.gender}}</small></td>
                     

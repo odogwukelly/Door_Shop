@@ -114,7 +114,8 @@
                 <thead>
                     <tr>
                         <th>User</th>
-                        <th>Date Order</th>
+                        <th>Order Date</th>
+                        <th>Order Time</th>
                         <th>Status</th>
                         <th>Price</th>
                         <th>Edit</th>
@@ -129,10 +130,12 @@
                             <small>{{order.customer.username}}</small>
                         </td>
                         <td><small>{{order.timestamp.strftime('%d-%m-%Y')}}</small></td>
+                        <td><small>{{order.timestamp.strftime('%H:%M:%S')}}
+                        </small></td>
                         <td><small>{{order.status}}</small></td>
                         <td><small>${{ order.total_price() | round(2) }}</small></td>
                         <td><a href="{{ url_for('update_order', order_id=order.id) }}"><button
-                                    class="btn btn-outline-info">Edit</button></a></td>
+                                    class="btn btn-outline-info">Confirm Order</button></a></td>
 
                         {% endfor %}
                 </tbody>

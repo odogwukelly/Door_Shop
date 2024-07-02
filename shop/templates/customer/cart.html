@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
 {% block content %}
 <div class="container mt-5">
     <div style="display: flex; justify-content: center;">
@@ -12,7 +12,8 @@
                     <th>Product</th>
                     <th>Title</th>
                     <th>Quantity</th>
-                    <th>Product Color</th>
+                    <th>Size</th>
+                    <th>Color</th>
                     <th>Price</th>
                     <th>Subtotal</th>
                     <th>Update</th>
@@ -22,21 +23,29 @@
             <tbody>
                 {% for key, item in cart.items() %}
                 <tr>
-                    
                     <td><img src="{{ url_for('static', filename='product_images/' + item.image) }}" alt="{{ item.title }}" class="img-thumbnail" style="max-width: 100px; max-height: 80px;"></td>
                     <td>{{ item.title }}</td>
                     <td>
-                        <form method="POST" action="{{ url_for('update_cart_quantity', product_id=key) }}" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to Update this cart?');">
+                        <form method="POST" action="{{ url_for('update_cart_quantity', product_id=key) }}" enctype="multipart/form-data">
                             <input type="number" name="quantity" value="{{ item.quantity }}" class="form-control" min="1">
                     </td>
                     <td>
-                            <input type="text" name="color" value="{{ item.color }}" class="form-control">
-                            
+                        <select name="size" class="form-control">
+                            {% for size in item.sizes %}
+                                <option value="{{ size }}" {% if size == item.selected_size or size == item.sizes[0] %}selected{% endif %}>{{ size }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="color" class="form-control">
+                            {% for color in item.colors %}
+                                <option value="{{ color }}" {% if color == item.selected_color or color == item.colors[0] %}selected{% endif %}>{{ color }}</option>
+                            {% endfor %}
+                        </select>
                     </td>
                     <td>${{ item.price }}</td>
                     <td>${{ item.price * item.quantity }}</td>
-                    
-                    <td> 
+                    <td>
                         <button type="submit" class="btn btn-outline-info btn-sm">Edit</button>
                     </form>
                 </td>
@@ -51,10 +60,14 @@
         </table>
     </div>
     <h3 class="mt-4">Total: ${{ total_price }}</h3>
-    <a href="{{ url_for('checkout')}}">
-        <button class="btn btn-outline-info">Proceed To Checkout</button>
-    </a>
-        
-    
+
+    <div style="display: flex; justify-content: space-between;">
+        <a href="{{url_for('checkout')}}">
+            <button class="btn btn-outline-info">Proceed To Checkout</button>
+        </a>
+        <a href="{{url_for('product_page')}}">
+            <button class="btn btn-outline-dark">Continue Shopping</button>
+        </a>
+    </div>
 </div>
 {% endblock %}

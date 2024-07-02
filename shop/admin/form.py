@@ -14,9 +14,9 @@ class CategoryForm(FlaskForm):
 class AddProductForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(min=2, max=100)])
     price = FloatField('Price', validators=[DataRequired(), NumberRange(min=0)])
-    description = TextAreaField('Description', validators=[Length(max=500)])
-    size = StringField('Size', validators=[Length(max=20)])
-    color = StringField('Color', validators=[Length(max=20)])
+    description = TextAreaField('Description', validators=[Length(max=600)])
+    size = StringField('Size', validators=[Length(max=100)])
+    color = StringField('Color', validators=[Length(max=100)])
     quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=1)])
     image_1 = FileField('Image 1', validators=[DataRequired(), FileAllowed(['jpg', 'png', 'jpeg'])])
     image_2 = FileField('Image 2', validators=[DataRequired(), FileAllowed(['jpg', 'png', 'jpeg'])])

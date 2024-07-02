@@ -4,7 +4,9 @@ from shop.customer.models import Customer, Order, OrderItem, Product, Category
 from shop.customer.form import UpdateProfileForm
 from shop.admin.form import AddProductForm, CategoryForm, EditCategoryForm, EditProductForm, UpdateOrderStatusForm
 from flask_login import login_required, current_user
-import os
+import os, re, json
+
+
 
 
 
@@ -172,20 +174,30 @@ def allProduct_page():
     return render_template('admin/allProduct.html', products=products, total_products=total_products)
 
 
+
+
+
+
+
+
+
 @app.route("/add-product", methods=['GET', 'POST'])
 @login_required
 def addProduct_page():
     if current_user.is_authenticated and not current_user.is_admin:
-            return redirect(url_for('landing_page'))
+        return redirect(url_for('landing_page'))
     form = AddProductForm()
     form.category.choices = [(c.id, c.name) for c in Category.query.order_by('name')]
     if form.validate_on_submit():
+        # Split the size and color fields into lists and then convert them to JSON strings
+        sizes = re.split(r'[,\s]+', form.size.data.strip())
+        colors = re.split(r'[,\s]+', form.color.data.strip())
         product = Product(
             title=form.title.data,
             price=form.price.data,
             description=form.description.data,
-            size=form.size.data,
-            color=form.color.data,
+            size=json.dumps(sizes),  # Store as JSON string
+            color=json.dumps(colors),  # Store as JSON string
             quantity=form.quantity.data,
             category_id=form.category.data
         )
@@ -200,6 +212,9 @@ def addProduct_page():
         flash('Product has been added!', 'success')
         return redirect(url_for('addProduct_page'))
     return render_template('admin/addProduct.html', form=form)
+
+
+
 
 
 @app.route("/edit_category/<int:category_id>", methods=['GET', 'POST'])

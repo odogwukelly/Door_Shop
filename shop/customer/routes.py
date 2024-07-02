@@ -1,20 +1,20 @@
 from shop import app, bcrypt, db
-from flask import render_template, redirect, url_for, flash, request, current_app, jsonify, session
+from flask import render_template, redirect, url_for, flash, request, current_app, jsonify, session, abort
 from .form import RegistrationForm, LoginForm, UpdateProfileForm, CheckoutForm
 from .models import Customer, Order, OrderItem
 from .models import Product, Category
 from flask_login import login_user, current_user, logout_user, login_required
-import secrets
-import os, stripe
+import secrets, os, stripe, json
 from dotenv import load_dotenv
 load_dotenv()
 
-stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 
 
 
+stripe.api_key = 'sk_test_51OPmzIDIrzfDF0fX1t8Dgg47h0OgCdgf6t9IouUZqRLCj81hZ1to1SKPo9KW43nOrNkA2UjGlB3EinymXei7cn4e00yhLq6lKb'
 
-@app.route("/checkout", methods=['GET', 'POST'])
+
+@app.route('/checkout', methods=['GET', 'POST'])
 @login_required
 def checkout():
     if current_user.is_authenticated:
@@ -24,60 +24,88 @@ def checkout():
 
     form = CheckoutForm()
     cart = session.get('cart', {})
+    
+    # Check if the cart is empty and redirect if it is
+    if not cart:
+        flash('Your cart is empty. Please add items to your cart before checking out.', 'warning')
+        return redirect(url_for('cart'))
+
     total_price = sum(item['price'] * item['quantity'] for item in cart.values())
 
-    if not cart:
-        flash('Your cart is empty!', 'danger')
-        return redirect(url_for('cart_page'))
+    if request.method == 'POST':
+        stripe_token = request.form.get('stripeToken')
 
-    if request.method == 'POST' and form.validate_on_submit():
         try:
-            # Create a Stripe Payment Intent
-            intent = stripe.PaymentIntent.create(
-                amount=int(total_price * 100),  # Stripe expects amount in cents
+            charge = stripe.Charge.create(
+                amount=int(total_price * 100),  # amount in cents
                 currency='usd',
-                metadata={'user_id': current_user.id}
+                description='Payment for order',
+                source=stripe_token,
+                metadata={'order_id': '6735'}
             )
-            # Render the checkout template with client_secret to handle payment
-            return render_template('customer/checkout.html', form=form, cart=cart, total_price=total_price, image_file=image_file, client_secret=intent.client_secret, stripe_public_key=os.getenv('STRIPE_PUBLIC_KEY'))
 
+            # Save order to the database
+            order = Order(user_id=current_user.id)
+            db.session.add(order)
+            db.session.commit()
+            print(f"Created Order: {order}")
+
+            for item in cart.values():
+                if 'id' not in item:
+                    current_app.logger.error('Item missing ID: %s', json.dumps(item, indent=2))
+                    continue  # Skip this item or handle the error as needed
+                selected_color = request.form.get('selected_color')
+                selected_size = request.form.get('selected_size')
+                order_item = OrderItem(
+                    order_id=order.id, 
+                    product_id=item['id'], 
+                    quantity=item['quantity'],
+                    selected_color=item['selected_color'],
+                    selected_size=item['selected_size'])
+                db.session.add(order_item)
+                print(f"Created OrderItem: {order_item}")
+            db.session.commit()
+
+            session.pop('cart', None)
+            flash('Your payment was successful!', 'success')
+            return redirect(url_for('order_confirmation', order_id=order.id))
         except stripe.error.StripeError as e:
-            flash('Payment processing error! Please try again.', 'danger')
+            flash(f'Error processing payment: {e}', 'danger')
             return redirect(url_for('checkout'))
 
-    return render_template('customer/checkout.html', form=form, cart=cart, total_price=total_price, image_file=image_file, stripe_public_key=os.getenv('STRIPE_PUBLIC_KEY'))
+    return render_template('customer/checkout.html', image_file=image_file, form=form, cart=cart, total_price=total_price)
 
-@app.route("/confirm_order", methods=['POST'])
+
+
+
+
+
+
+
+
+
+
+@app.route('/order_confirmation/<int:order_id>', methods=['POST', 'GET'])
 @login_required
-def confirm_order():
-    cart = session.get('cart', {})
-    if not cart:
-        flash('Your cart is empty!', 'danger')
-        return redirect(url_for('cart_page'))
+def order_confirmation(order_id):
+    if current_user.is_authenticated:
+        image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
+    else:
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
 
-    payment_intent_id = request.form.get('payment_intent_id')
-    if not payment_intent_id:
-        flash('Payment not processed. Please try again.', 'danger')
-        return redirect(url_for('checkout'))
+    order = Order.query.get_or_404(order_id)
+    user = Customer.query.get_or_404(order.user_id)
+    print(order)
+    
+    # Retrieve order items explicitly
+    order_items = OrderItem.query.filter_by(order_id=order.id).all()
+    print(f"Order Items: {order_items}")
 
-    # Create a new order
-    order = Order(user_id=current_user.id)
-    db.session.add(order)
-    db.session.commit()
+    total_price = sum(item.product.price * item.quantity for item in order_items)
+    print(total_price)
 
-    for product_id, item in cart.items():
-        order_item = OrderItem(
-            order_id=order.id,
-            product_id=int(product_id),
-            quantity=item['quantity']
-        )
-        db.session.add(order_item)
-    db.session.commit()
+    return render_template('customer/order_confirmation.html', user=user, image_file=image_file, order=order, order_items=order_items, total_price=total_price)
 
-    # Clear the cart
-    session['cart'] = {}
-    flash('Your order has been placed successfully!', 'success')
-    return redirect(url_for('order_confirmation', order_id=order.id))
 
 
 
@@ -96,21 +124,6 @@ def my_orders():
 
     orders = Order.query.filter_by(user_id=current_user.id).all()
     return render_template('customer/my_order.html', orders=orders, image_file=image_file)
-
-
-
-@app.route("/order_confirmation/<int:order_id>")
-@login_required
-def order_confirmation(order_id):
-    if current_user.is_authenticated:
-        image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
-    else:
-        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
-
-    order = Order.query.get_or_404(order_id)
-    total_price = sum(item.product.price * item.quantity for item in order.order_items)
-    return render_template('customer/order_confirmation.html', order=order, image_file=image_file, total_price=total_price)
-
 
 
 
@@ -133,39 +146,6 @@ def cart_counter():
     return dict(cart_counter=count_items_in_cart)
 
 
-
-
-
-
-
-@app.route("/add_to_cart/<int:product_id>", methods=['POST'])
-def add_to_cart(product_id):
-    cart_product = Product.query.get_or_404(product_id)
-    
-    if 'cart' not in session:
-        session['cart'] = {}
-    
-    cart = session['cart']
-    
-    if str(product_id) in cart:
-        cart[str(product_id)]['quantity'] += 1
-    else:
-        cart[str(product_id)] = {
-            'title': cart_product.title,
-            'color': cart_product.color,
-            'price': cart_product.price,
-            'quantity': 1,
-            'image': cart_product.image_1
-        }
-    
-    session['cart'] = cart
-    flash(f'Added {cart_product.title} to your cart', 'success')
-    return redirect(url_for('product_page', product_id=product_id))
-
-
-
-
-
 @app.route("/cart")
 def cart():
     if current_user.is_authenticated:
@@ -176,11 +156,64 @@ def cart():
 
     if 'cart' not in session:
         session['cart'] = {}
+        
     
     cart = session['cart']
     total_price = sum(item['price'] * item['quantity'] for item in cart.values())
 
     return render_template('customer/cart.html', cart=cart, total_price=total_price, image_file=image_file)
+
+
+@app.route("/add_to_cart/<int:product_id>", methods=['POST'])
+def add_to_cart(product_id):
+    cart_product = Product.query.get_or_404(product_id)
+
+    if 'cart' not in session:
+        session['cart'] = {}
+
+    cart = session['cart']
+
+    if str(product_id) in cart:
+        cart[str(product_id)]['quantity'] += 1
+    else:
+        sizes = cart_product.size.replace(' ', '').replace('[', '').replace(']', '').replace('"', '').split(',')
+        colors = cart_product.color.replace(' ', '').replace('[', '').replace(']', '').replace('"', '').split(',')
+
+        cart[str(product_id)] = {
+            'id' : product_id,
+            'title': cart_product.title,
+            'price': cart_product.price,
+            'quantity': 1,
+            'image': cart_product.image_1,
+            'sizes': sizes,
+            'colors': colors,
+            'selected_size': sizes[0] if sizes else '',
+            'selected_color': colors[0] if colors else ''
+        }
+
+    session['cart'] = cart
+    flash(f'Added {cart_product.title} to your cart', 'success')
+    return redirect(url_for('product_page', product_id=product_id))
+
+
+def add_to_cart(product_id):
+    product = Product.query.get(product_id)
+    if product:
+        cart = session.get('cart', {})
+        if product_id not in cart:
+            cart[product_id] = {
+                'id': product.id,
+                'title': product.title,
+                'price': product.price,
+                'quantity': 1,
+                'image': product.image_1,
+                'color': product.color,
+                'size': product.size
+            }
+        else:
+            cart[product_id]['quantity'] += 1
+        session['cart'] = cart
+
 
 
 
@@ -190,12 +223,14 @@ def update_cart_quantity(product_id):
     cart = session.get('cart', {})
     if str(product_id) in cart:
         cart[str(product_id)]['quantity'] = int(request.form['quantity'])
-        cart[str(product_id)]['color'] = request.form['color']
+        cart[str(product_id)]['selected_size'] = request.form['size']
+        cart[str(product_id)]['selected_color'] = request.form['color']
         session['cart'] = cart
         flash('Cart updated successfully', 'success')
     else:
         flash('Product not found in cart', 'danger')
     return redirect(url_for('cart'))
+
 
 @app.route("/remove_from_cart/<int:product_id>", methods=['POST'])
 @login_required
