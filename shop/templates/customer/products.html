@@ -8,14 +8,15 @@
 <div class="container" style="margin-top: 25px;">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-lg-3 sidebar">
+        <div class="col-lg-3 sidebar mt-4">
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active">
-                    Categories
-                </a>
-                <a href="#" class="list-group-item list-group-item-action category-link" data-category-id="">All Products</a>
+                <h5  style="text-align: center; color: rgb(44, 44, 118);">Categories</h5>
+                <!-- <a href="#" class="list-group-item list-group-item-action ">
+                    
+                </a> -->
+                <a href="#" style="color: rgb(44, 44, 118);" class="list-group-item list-group-item-action category-link" data-category-id="">All Products</a>
                 {% for category in categories %}
-                <a href="#" class="list-group-item list-group-item-action category-link" data-category-id="{{ category.id }}">{{ category.name }}</a>
+                <a href="#" style="color: rgb(44, 44, 118);" class="list-group-item list-group-item-action category-link" data-category-id="{{ category.id }}">{{ category.name }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -23,7 +24,7 @@
 
         <!-- Mobile Category Dropdown -->
         <div class="col-12 mobile-category">
-            <select class="form-control" id="category-select">
+            <select style="color: rgb(44, 44, 118);" class="form-control" id="category-select">
                 <option value="">All Products</option>
                 {% for category in categories %}
                 <option value="{{ category.id }}">{{ category.name }}</option>
@@ -40,12 +41,17 @@
                         <a href="{{ url_for('productDetails_page', product_id=product.id) }}">
                             <img class="card-img-top" src="{{ url_for('static', filename='product_images/' + product.image_1) }}" alt="">
                         </a>
-                        <div class="card-body">
+                        <div class="card-body" style="display: flex; justify-content: space-between;">
                             <div class="">
-                                <h6 class="card-title">
-                                    {{ product.title }}
-                                </h6>
-                                <small>${{ product.price }}</small>
+                            <h6 class="card-title">
+                                {{ product.title }}
+                            </h6>
+                            <small>${{ product.price }}</small>
+                            </div>
+                            <div class="">
+                                <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}">
+                                    <button class="btn btn-outline btn-sm index-cart">Cart</button>
+                                </form>
                             </div>
                             
                         </div>
@@ -62,7 +68,7 @@
 <!-- /.container -->
 
 <!-- Modal for Product Details -->
-<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+<div class="modal fade mb-4" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

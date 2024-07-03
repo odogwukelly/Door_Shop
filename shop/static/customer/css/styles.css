@@ -5,21 +5,51 @@ body {
     padding-top: 56px; /* Adjust the padding to account for the fixed navbar */
 }
 
+.nav-item a {
+    color: antiquewhite;
+}
+.nav-item a:hover {
+    color: rgb(224, 144, 24);
+}
+
 .navbar-brand {
     font-weight: bold;
     font-size: 1.5em;
 }
+.index-cart{
+    border-color:antiquewhite;
+    background-color: rgb(44, 44, 118);
+    color:antiquewhite;
+}
+.index-cart:hover{
+    border-color: rgb(44, 44, 118);
+    background-color: rgb(224, 144, 24);
+    color: rgb(44, 44, 118);
+}
+.carousel-caption h5{
+    font-size: 2rem;
+    margin-left: -50px;
+    color: rgb(44, 44, 118);
+    font-family:monospace;
+}
+.carousel-caption p{
+    margin-top: 20px;
+    margin-left: -50px;
+    font-size: .61rem;
+    color: rgb(44, 44, 118);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 
 .carousel-inner img {
-    height: 600px;
-    object-fit: cover;
+    height: 400px;
+    object-fit:fill;
 }
 
 .carousel-caption {
     background: none;
     color: black;
-    width: 40%;
-    padding: 10px;
+    width: 30%;
+    padding: 5px;
     border-radius: 5px;
     position: absolute;
     right: 10%;
@@ -125,6 +155,7 @@ footer p {
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) { 
+    
     .product-img {
         height: auto;
     }
@@ -135,6 +166,7 @@ footer p {
         margin: 10px 0;
         display: inline-block;
     }
+    
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -167,6 +199,17 @@ footer p {
         height: 250px;
         width: 250px;
         margin: 10px;
+    }
+    .carousel-caption h5{
+        font-size: 4rem;
+        color: rgb(44, 44, 118);
+        font-family:monospace;
+        }
+    .carousel-caption p{
+        margin-top: 20px;
+        font-size: 1rem;
+        color: rgb(44, 44, 118);
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
 }
 
@@ -593,6 +636,7 @@ footer p {
 @media (min-width: 768px) {
     .layout-cart-icon{
         display: none;
+        color: white;
 
     
     }

@@ -193,7 +193,7 @@ def add_to_cart(product_id):
 
     session['cart'] = cart
     flash(f'Added {cart_product.title} to your cart', 'success')
-    return redirect(url_for('product_page', product_id=product_id))
+    return redirect(url_for('landing_page', product_id=product_id))
 
 
 def add_to_cart(product_id):

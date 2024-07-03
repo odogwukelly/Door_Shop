@@ -10,8 +10,8 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a class="navbar-brand ml-4" href="{{url_for('landing_page')}}">Door~Shop</a>
+    <nav  class="navbar navbar-expand-lg  fixed-top" style="background-color: rgb(44, 44, 118);">
+        <a style="color: rgb(224, 144, 24); font-size: 20px;" class="navbar-brand" href="{{url_for('landing_page')}}"><em>WATSON-TIME</em></a>
         
         <div class="">
             <a class="mr-4 layout-cart-icon" href="{{ url_for('cart') }}">
@@ -21,9 +21,9 @@
                 </div>
             </a>
             
-       
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        
+        <button style=" background-color: rgb(224, 144, 24); justify-content: center;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span style="margin-bottom: -5px;" class="navbar-toggler-icon"><small style="color: rgb(44, 44, 118); margin-left: -7px; font-size: 15px; margin-top: 10%;"><strong>MENU</strong></small></span>
         </button>
     </div>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -40,7 +40,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('contact_page')}}">Contact</a>
                 </li>
-                <li class="nav-item">
+                <li class="">
                     <a class="nav-link" href="{{ url_for('cart') }}">
                         <img src="{{ url_for('static', filename='customer/assets/icon/shopping_cart.png') }}" alt="Cart">
                         <div class="cart-counter">
@@ -78,8 +78,8 @@
    {% endblock content %}
     
     <!-- Footer -->
-    <footer class="bg-light text-center py-4">
-        <p>&copy; 2024 ShopNow. All Rights Reserved.</p>
+    <footer style="background-color: rgb(44, 44, 118); color: antiquewhite;" class="text-center py-4">
+        <p>&copy; 2024 New-Watson. All Rights Reserved.</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
