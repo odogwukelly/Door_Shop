@@ -5,8 +5,6 @@ from flask_wtf.file import FileField, FileAllowed
 from shop.customer.models import Category
 
 
-
-
 class CategoryForm(FlaskForm):
     name = StringField('Category Name', validators=[DataRequired(), Length(min=2, max=100)])
     submit = SubmitField('Add Category')

@@ -196,23 +196,23 @@ def add_to_cart(product_id):
     return redirect(url_for('landing_page', product_id=product_id))
 
 
-def add_to_cart(product_id):
-    product = Product.query.get(product_id)
-    if product:
-        cart = session.get('cart', {})
-        if product_id not in cart:
-            cart[product_id] = {
-                'id': product.id,
-                'title': product.title,
-                'price': product.price,
-                'quantity': 1,
-                'image': product.image_1,
-                'color': product.color,
-                'size': product.size
-            }
-        else:
-            cart[product_id]['quantity'] += 1
-        session['cart'] = cart
+# def add_to_cart(product_id):
+#     product = Product.query.get(product_id)
+#     if product:
+#         cart = session.get('cart', {})
+#         if product_id not in cart:
+#             cart[product_id] = {
+#                 'id': product.id,
+#                 'title': product.title,
+#                 'price': product.price,
+#                 'quantity': 1,
+#                 'image': product.image_1,
+#                 'color': product.color,
+#                 'size': product.size
+#             }
+#         else:
+#             cart[product_id]['quantity'] += 1
+#         session['cart'] = cart
 
 
 

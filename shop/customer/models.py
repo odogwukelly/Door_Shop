@@ -10,8 +10,6 @@ from sqlalchemy.dialects.postgresql import JSON
 def load_customer(customer_id):
     return Customer.query.get(customer_id)
 
-
-
 class Customer(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -25,14 +23,8 @@ class Customer(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, default=False)
     orders = db.relationship('Order', backref='customer', lazy=True)
 
-
     def __repr__(self):
         return f"Customer_{self.id}('{self.username}', '{self.is_admin}', '{self.email}', '{self.image_file}', '{self.date_of_birth}', '{self.gender}', '{self.date_created}', '{self.is_admin}')"
-
-
-
-
-
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)

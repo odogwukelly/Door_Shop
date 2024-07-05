@@ -67,9 +67,6 @@ class UpdateProfileForm(FlaskForm):
                 raise ValidationError("You can't perform this action")
             
 
-
-
-
 class CheckoutForm(FlaskForm):
     full_name = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=100)])
     address = StringField('Address', validators=[DataRequired(), Length(min=5, max=200)])

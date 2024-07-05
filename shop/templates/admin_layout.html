@@ -8,8 +8,11 @@
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
 	<link rel="stylesheet" href="{{url_for('static', filename='admin/css/style.css')}}">
-
-	<title>Admin</title>
+    {% if title %}
+	<title>{{title}}</title>
+    {% else %}
+    <title>Admin</title>
+    {% endif %}
 </head>
 <body>
 
@@ -18,7 +21,7 @@
 	<section id="sidebar">
         <a href="{{url_for('landing_page')}}" class="brand">
             <i class='bx bxs-smile'></i>
-            <span class="text">Door~Shop</span>
+            <span class="text">New-Watson</span>
         </a>
         <ul class="side-menu top">
             <li class="">
