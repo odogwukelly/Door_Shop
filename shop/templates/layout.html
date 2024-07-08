@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,24 +9,30 @@
     <link rel="stylesheet" href="{{url_for('static', filename='customer/css/styles.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
 <body>
     <!-- Navbar -->
-    <nav  class="navbar navbar-expand-lg  fixed-top" style="background-color: rgb(44, 44, 118);">
-        <a style="color: rgb(224, 144, 24); font-size: 20px;" class="navbar-brand" href="{{url_for('landing_page')}}"><em>WATSON-TIME</em></a>
-        
+    <nav class="navbar navbar-expand-lg  fixed-top" style="background-color: rgb(44, 44, 118);">
+        <a style="color: rgb(224, 144, 24); font-size: 20px;" class="navbar-brand"
+            href="{{url_for('landing_page')}}"><em>WATSON-TIME</em></a>
+
         <div class="">
-            <a class="mr-4 layout-cart-icon" href="{{ url_for('cart') }}">
+            <a class="mr-4 layout-cart-icon cart-big" href="{{ url_for('cart') }}">
                 <img src="{{ url_for('static', filename='customer/assets/icon/shopping_cart.png') }}" alt="Cart">
                 <div class="cart-counter">
                     <p>{{ cart_counter() }}</p>
                 </div>
             </a>
-            
-        
-        <button style=" background-color: rgb(224, 144, 24); justify-content: center;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span style="margin-bottom: -5px;" class="navbar-toggler-icon"><small style="color: rgb(44, 44, 118); margin-left: -7px; font-size: 15px; margin-top: 10%;"><strong>MENU</strong></small></span>
-        </button>
-    </div>
+
+
+
+            <button style=" background-color: rgb(224, 144, 24); justify-content: center;" class="navbar-toggler"
+                type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span style="margin-bottom: -5px;" class="navbar-toggler-icon"><small
+                        style="color: rgb(44, 44, 118); margin-left: -7px; font-size: 15px; margin-top: 10%;"><strong>MENU</strong></small></span>
+            </button>
+        </div>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -40,9 +47,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('contact_page')}}">Contact</a>
                 </li>
-                <li class="">
+                <li class="cart-nav-r">
                     <a class="nav-link" href="{{ url_for('cart') }}">
-                        <img src="{{ url_for('static', filename='customer/assets/icon/shopping_cart.png') }}" alt="Cart">
+                        <img src="{{ url_for('static', filename='customer/assets/icon/shopping_cart.png') }}"
+                            alt="Cart">
                         <div class="cart-counter">
                             <p>{{ cart_counter() }}</p>
                         </div>
@@ -50,35 +58,42 @@
                 </li>
             </ul>
         </div>
-        
+
         <div class=" mr-4 collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              {% if current_user.is_authenticated %}
-              {% else %}
-                
-                <a class="nav-link" href="{{url_for('login_page')}}">Sign In / Sign Up</a>
-              {% endif %}
-            </li>
-          </ul>
-          {% if current_user.is_authenticated %}
-          
-          {% if current_user.is_admin %}
-          <a class="nav-link " href="{{url_for('dashboard_page')}}"><img style="width: 3rem; height: 3rem; border-radius: 100%;" src="{{image_file}}" alt=""></a>
-          {% else %}
-          <a class="nav-link " href="{{url_for('profile_page')}}"><img style="width: 3rem; height: 3rem; border-radius: 100%;" src="{{image_file}}" alt=""></a>
-        {% endif %}
-          
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    {% if current_user.is_authenticated %}
+                    {% else %}
+
+                    <a class="nav-link" href="{{url_for('login_page')}}">Sign In / Sign Up</a>
+                    {% endif %}
+                </li>
+            </ul>
+            {% if current_user.is_authenticated %}
+
+            {% if current_user.is_admin %}
+            <a class="nav-link " href="{{url_for('dashboard_page')}}"><img
+                    style="margin-left: -15px; width: 3rem; height: 3rem; border-radius: 100%;" src="{{image_file}}"
+                    alt=""></a>
+            {% else %}
+            <a class="nav-link " href="{{url_for('profile_page')}}"><img
+                    style="margin-left: -15px; width: 3rem; height: 3rem; border-radius: 100%;" src="{{image_file}}"
+                    alt=""></a>
+            {% endif %}
+
         </div>
         {% else %}
         {% endif %}
     </nav>
 
-   {% block content %}
-   {% endblock content %}
-    
+    {% block content %}
+    {% endblock content %}
+
     <!-- Footer -->
-    <footer style="background-color: rgb(44, 44, 118); color: antiquewhite;" class="text-center py-4">
+
+    <footer
+        style="border-top: solid 5px; border-color: rgb(224, 144, 24); background-color: rgb(44, 44, 118); color: antiquewhite;"
+        class="text-center py-4 fixed-bottom">
         <p>&copy; 2024 New-Watson. All Rights Reserved.</p>
     </footer>
 
@@ -87,4 +102,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
+
 </html>

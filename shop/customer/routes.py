@@ -164,6 +164,8 @@ def cart():
     return render_template('customer/cart.html', cart=cart, total_price=total_price, image_file=image_file)
 
 
+from flask import request
+
 @app.route("/add_to_cart/<int:product_id>", methods=['POST'])
 def add_to_cart(product_id):
     cart_product = Product.query.get_or_404(product_id)
@@ -193,32 +195,12 @@ def add_to_cart(product_id):
 
     session['cart'] = cart
     flash(f'Added {cart_product.title} to your cart', 'success')
-    return redirect(url_for('landing_page', product_id=product_id))
-
-
-# def add_to_cart(product_id):
-#     product = Product.query.get(product_id)
-#     if product:
-#         cart = session.get('cart', {})
-#         if product_id not in cart:
-#             cart[product_id] = {
-#                 'id': product.id,
-#                 'title': product.title,
-#                 'price': product.price,
-#                 'quantity': 1,
-#                 'image': product.image_1,
-#                 'color': product.color,
-#                 'size': product.size
-#             }
-#         else:
-#             cart[product_id]['quantity'] += 1
-#         session['cart'] = cart
-
-
+    
+    # Redirect back to the referring page
+    return redirect(request.referrer)
 
 
 @app.route('/update_cart_quantity/<int:product_id>', methods=['POST'])
-@login_required
 def update_cart_quantity(product_id):
     cart = session.get('cart', {})
     if str(product_id) in cart:
@@ -233,7 +215,6 @@ def update_cart_quantity(product_id):
 
 
 @app.route("/remove_from_cart/<int:product_id>", methods=['POST'])
-@login_required
 def remove_from_cart(product_id):
     cart = session.get('cart', {})
     if str(product_id) in cart:

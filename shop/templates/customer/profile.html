@@ -5,8 +5,8 @@
 <div style="display: flex; justify-content: center;">
     {% include 'customer/msgFlash.html' %}
 </div>
-<div class="container profile-container">
-    
+<div class="container profile-container" style="margin-bottom: 100px;">
+
     <div class="profile-header">
         <img src="{{image_file}}" alt="Profile Picture" class="profile-image">
         <div class="profile-name">{{current_user.username}}</div>
@@ -17,14 +17,15 @@
         <button class=" btn-outline-info" style="border-radius: 50px; font-size: larger;">My Orders</button>
     </form>
     <hr>
-    <form method="POST" action="{{url_for('profile_page')}}" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to Update your profile?');">
+    <form method="POST" action="{{url_for('profile_page')}}" enctype="multipart/form-data"
+        onsubmit="return confirm('Are you sure you want to Update your profile?');">
         {{ form.hidden_tag() }}
-        
+
         <fieldset class="form-group">
             <h3 class="mt-4">Update Profile</h3>
             </legend>
             <br>
-            
+
             <!-- Username Field -->
             <div class="form-group">
                 {{ form.username.label() }}
@@ -80,8 +81,8 @@
                 {{ form.profile_img(class="form-control-file") }}
                 {% if form.profile_img.errors %}
                 {% for error in form.profile_img.errors %}
-                    <span class="text-danger">{{ error }}</span><br>
-                    {% endfor %}
+                <span class="text-danger">{{ error }}</span><br>
+                {% endfor %}
                 {% endif %}
             </div>
         </fieldset>
@@ -96,7 +97,7 @@
     <div class="logout" style="display: flex; justify-content: end;">
         <a class="btn btn-outline-danger" href="{{url_for('logout')}}">Logout</a>
     </div>
-    
+
 </div>
 
 {% endblock content %}

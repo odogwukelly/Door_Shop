@@ -11,6 +11,9 @@ body {
 .nav-item a:hover {
     color: rgb(224, 144, 24);
 }
+.cart-nav-r{
+    display: none;
+}
 
 .navbar-brand {
     font-weight: bold;
@@ -27,28 +30,28 @@ body {
     color: rgb(44, 44, 118);
 }
 .carousel-caption h5{
-    font-size: 2rem;
-    margin-left: -50px;
+    font-size: 1.7rem;
+    margin-left: -20px;
     color: rgb(44, 44, 118);
     font-family:monospace;
 }
 .carousel-caption p{
     margin-top: 20px;
-    margin-left: -50px;
+    margin-left: -20px;
     font-size: .61rem;
     color: rgb(44, 44, 118);
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:'Times New Roman', Times, serif;
 }
 
 .carousel-inner img {
-    height: 400px;
+    height: 300px;
     object-fit:fill;
 }
 
 .carousel-caption {
     background: none;
     color: black;
-    width: 30%;
+    width: 45%;
     padding: 5px;
     border-radius: 5px;
     position: absolute;
@@ -154,7 +157,14 @@ footer p {
 }
 
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) { 
+@media (min-width: 576px) {
+    
+    .cart-nav-r{
+        display:none;
+    }
+    .cart-big{
+        display: contents;
+    }
     
     .product-img {
         height: auto;
@@ -171,6 +181,14 @@ footer p {
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) { 
+
+    .cart-nav-r{
+        display:none;
+    }
+    .cart-big{
+        display: contents;
+    }
+
     .carousel-inner img {
         height: 400px;
     }
@@ -190,6 +208,14 @@ footer p {
     .carousel-inner img {
         height: 500px;
     }
+    .cart-big{
+        display: contents;
+    }
+
+    .cart-nav-r{
+        display:contents;
+    }
+
 
     .product-img {
         height: 500px;
@@ -217,6 +243,9 @@ footer p {
 @media (min-width: 1200px) { 
     .carousel-inner img {
         height: 600px;
+    }
+    .cart-big{
+        display: contents;
     }
 
     .product-img {
