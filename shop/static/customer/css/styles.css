@@ -182,6 +182,18 @@ footer p {
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 770px) { 
+
+    .carousel-caption h5{
+        font-size: 2.5rem;
+        color: rgb(44, 44, 118);
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    .carousel-caption p{
+        margin-top: 10px;
+        font-size: .8rem;
+        color: rgb(44, 44, 118);
+        font-family:'Times New Roman', Times, serif;
+    }
     
     .carousel-inner img {
         height: 400px;
@@ -223,13 +235,13 @@ footer p {
     .carousel-caption h5{
         font-size: 4rem;
         color: rgb(44, 44, 118);
-        font-family:monospace;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
     .carousel-caption p{
-        margin-top: 20px;
+        margin-top: 10px;
         font-size: 1rem;
         color: rgb(44, 44, 118);
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-family:'Times New Roman', Times, serif;
     }
 }
 
