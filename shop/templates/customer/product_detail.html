@@ -21,12 +21,13 @@
             </div>
         </div>
         <div class="col-md-6 product-info">
-            <h1>{{product.title}}</h1>
-            <p class="price">${{product.price}}</p>
+            <h1><small>Title: </small><small>{{product.title}}</small></h1>
+            <h1 class="price"><small>Price: ${{product.price}}</small></h1>
+            <h1><small>Description:</small></h1>
             <p class="description">{{product.description}}</p>
             <div class="add-to-cart">
                 <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}">
-                    <button class="btn btn-primary">Add to Cart</button>
+                    <button class="btn btn-outline-info">Add to Cart</button>
                 </form>
             </div>
         </div>
