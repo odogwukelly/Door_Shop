@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container mt-5" style="margin-bottom: 100px;">
+    <div class="alert" role="alert" style="text-align: center; background-color: rgb(44, 44, 118); color: rgb(224, 144, 24); padding-top: 25px;">
+        <h3 class="alert-heading">New-Watson</h3>
+        <p>Home for quality and durability</p>
+    </div>
+    <h6 class="mb-0 ml-3"><strong>Order ID: </strong>QXP00{{ order.id }}</h6>
+    <h6 class="mb-0 ml-3"><strong>Order Date: </strong>{{ order.timestamp.strftime('%d-%m-%Y') }}</h6>
+    <h6 class="mb-0 ml-3"><strong>Order Time: </strong>{{ order.timestamp.strftime('%H:%M:%S') }}</h6>
+
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h5>Order Items</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for item in order_items %}
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-2">
+                        <small><strong>Title: </strong>{{ item.product.title }}</small>
+                    </div>
+                    <div class="col-md-2">
+                        <small><strong>Color: </strong>{{ item.selected_color }}</small>
+                    </div>
+                    <div class="col-md-2">
+                        <small><strong>Size: </strong>{{ item.selected_size }}</small>
+                    </div>
+
+                    <div class="col-md-2">
+                        <small><strong>Quantity: </strong>{{ item.quantity }}</small>
+                    </div>
+                    <div class="col-md-2">
+                        <small><strong>Price: </strong>${{ item.product.price }}</small>
+                    </div>
+                    <div class="col-md-2">
+                        <small><strong>Sum Total: </strong>${{ item.product.price * item.quantity }}</small>
+                    </div>
+
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="card-footer">
+            <h5 class="text-right"><strong>Total Price: </strong>${{ total_price }}</h5>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

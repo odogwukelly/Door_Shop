@@ -15,11 +15,11 @@
             </thead>
             <tbody>
                 {% for order in orders %}
-                <tr>
-                    <td><small>QXP00{{ order.id }}</small></td>
-                    <td><small>${{ order.total_price() | round(2) }}</small></td>
-                    <td><small>{{ order.timestamp.strftime('%d-%m-%Y') }}</small></td>
-                    <td><small>{{ order.status }}</small></td>
+                    <tr>
+                        <td> <a style="color: black;" href="{{url_for('order_view', order_id=order.id)}}"><small>QXP00{{ order.id }}</small></a></td>
+                        <td><small>${{ order.total_price() | round(2) }}</small></td>
+                        <td><small>{{ order.timestamp.strftime('%d-%m-%Y') }}</small></td>
+                        <td><small>{{ order.status }}</small></td>
                     </tr>
                 {% endfor %}
             </tbody>

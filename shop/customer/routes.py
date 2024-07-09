@@ -108,6 +108,28 @@ def order_confirmation(order_id):
 
 
 
+@app.route('/order_view/<int:order_id>', methods=['POST', 'GET'])
+@login_required
+def order_view(order_id):
+    if current_user.is_authenticated:
+        image_file = url_for('static', filename='customer/assets/profile_pics/' + current_user.image_file)
+    else:
+        image_file = url_for('static', filename='admin/assets/profile_pics/defaults.png')
+
+    order = Order.query.get_or_404(order_id)
+    user = Customer.query.get_or_404(order.user_id)
+    print(order)
+    
+    # Retrieve order items explicitly
+    order_items = OrderItem.query.filter_by(order_id=order.id).all()
+    print(f"Order Items: {order_items}")
+
+    total_price = sum(item.product.price * item.quantity for item in order_items)
+    print(total_price)
+
+    return render_template('customer/order_view.html', user=user, image_file=image_file, order=order, order_items=order_items, total_price=total_price)
+
+
 
 
 
