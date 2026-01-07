@@ -74,8 +74,6 @@ STRIPE_PUBLIC_KEY=pk_test_...
 + Product forms and validation are in shop/admin/form.py.
 + Customer flows (registration/login, product browsing, checkout) live in shop/customer/*.
 
-## Tests
-No automated tests are included in the repository. Adding unit and integration tests is recommended before production use.
 
 ## Contributing
 Contributions are welcome. Suggested steps:
